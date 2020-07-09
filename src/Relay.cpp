@@ -2,40 +2,45 @@
 
 Relay::Relay(){}
 
-Relay::Relay(int p, bool isNormallyOpen){
-	pin = p;
-	normallyOpen = isNormallyOpen;
+Relay::Relay(int port)
+{
+	pin = port;
+	state = true; // low level active relay board
 }
 
-void Relay::begin(){
+void Relay::init()
+{
 	pinMode(pin, OUTPUT);
+	digitalWrite(pin, state); 
 }
 
-bool Relay::getState(){
-	if (normallyOpen){
-		return !state;
-	}
-	else {
-		return state;
-	}
+bool Relay::getState()
+{
+	return !state;
 }
-void Relay::turnOn(){
-	if (normallyOpen){
-		if (state == !true) return;
-		state = !true;
-	} else {
-		if (state == true) return;
-		state = true;
-	}
-	digitalWrite(pin, state);
+
+void Relay::setRelay(bool bOn)
+{
+	if (bOn)
+		on();
+	else
+		off();
 }
-void Relay::turnOff(){
-	if (normallyOpen){
-		if (state == !false) return;
-		state = !false;
-	} else {
-		if (state == false) return;
+
+void Relay::on()
+{
+	if (state != false)
+	{
 		state = false;
+		digitalWrite(pin, state);		
 	}
-	digitalWrite(pin, state);
+}
+
+void Relay::off()
+{
+	if (state != true)
+	{
+		state = true;
+		digitalWrite(pin, state);		
+	}
 }

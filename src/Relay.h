@@ -8,17 +8,17 @@
 class Relay
 {
  protected:
-	 int pin;
+	 int  pin;
 	 bool state;
-	 bool normallyOpen;
 
  public:
 	 Relay();
-	 Relay(int p, bool isNormallyOpen);
-	 void begin();
+	 Relay(int port);
+	 void init();
 	 bool getState();
-	 void turnOn();
-	 void turnOff();
+	 void setRelay(bool bOn);	 
+	 void on();
+	 void off();
 };
 
 #endif
